@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node* next;
+};
+
+void append(Node** head,int new_data)
+{
+    Node* t = *head;
+    Node* new_node = new Node;
+
+    new_node->data = new_data;
+    new_node->next = NULL;
+
+    while(t->next != NULL)
+        t = t->next;
+        t->next = new_node;
+}
+
+/*void push(Node** head,int new_data)
+{
+    Node* new_node = new Node;
+    new_node->data = new_data;
+    new_node->next = *head;
+    *head = new_node;
+
+}*/
+
+void middle(Node** head)
+{
+    Node* t = *head;
+    Node* slow_ptr = t;
+    Node* fast_ptr = t;
+
+    if(t != NULL)
+    {
+        while(fast_ptr != NULL && fast_ptr->next !=NULL)
+        {
+            fast_ptr = fast_ptr->next->next;
+            slow_ptr = slow_ptr->next;
+        }
+        cout<<slow_ptr->data;
+    }
+}
+
+void print(Node* head)
+{
+    while(head != NULL)
+    {
+        cout<<head->data<<" ";
+        head = head->next;
+    }
+}
+
+int main()
+{
+    Node* head = new Node;
+
+    int n;
+    cin>>n;
+
+    for(int i=0;i<n;i++)
+    {
+        int t;
+        cin>>t;
+
+        append(&head,t);
+    }
+
+    print(head);
+    middle(&head);
+}
