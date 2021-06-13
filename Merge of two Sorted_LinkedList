@@ -1,0 +1,88 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node                                                      
+{
+public:
+    int data;
+    Node* next;
+};
+
+Node* mergelist(Node* a, Node* b)
+{
+    Node* head = NULL;
+
+    if(a == NULL)
+        return b;
+    else if(b == NULL)
+        return a;
+
+    if(a->data <= b->data)
+    {
+        head = a;
+        head->next = mergelist(a->next, b);
+    }
+    else
+    {
+        head = b;
+        head->next = mergelist(a, b->next);
+    }
+    return head;
+}
+
+void append(Node* head, int new_data)
+{
+    Node* new_node = new Node();
+    Node* t = head;
+
+    new_node->data = new_data;
+    new_node->next = NULL;
+
+    while(t->next != NULL)
+        t = t->next;
+        t->next = new_node;
+}
+
+void print_list(Node* n)
+{
+    while(n != NULL)
+    {
+        cout<<n->data<<" ";
+        n = n->next;
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    Node* a = new Node();
+    Node* b = new Node();
+    int n,m;
+    cin>>n;
+
+    for(int i=0;i<n;i++)
+    {
+        int t;
+        cin>>t;
+        for(int j=0;j<t;j++)
+        {
+            int r;
+            cin>>r;
+            append(a,r);
+        }
+        print_list(a);
+        cout<<endl;
+
+        cin>>m;
+
+        for(int j=0;j<m;j++)
+        {
+            int p;
+            cin>>p;
+            append(b,p);
+        }
+        print_list(b);
+
+        print_list(mergelist(a,b));
+    }
+}
